@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class readXmlHjt extends Command
 {
@@ -40,10 +41,40 @@ class readXmlHjt extends Command
         //
         echo $this->argument('path')."\n";
 
-        $xmlString = file_get_contents($this->argument('path'));
-        $xml = simplexml_load_string($xmlString, 'SimpleXMLElement', LIBXML_NOCDATA);
-        $xmljson= json_encode($xml);
-        $xml=json_decode($xmljson,true);
-        var_dump($xml);
+        $row = 1;
+        $handle = fopen($this->argument('path'), "r");
+        while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+            # code...
+            // echo "row {$row} - {$data[0]} - {$data[1]} - {$data[2]} - {$data[3]} - {$data[4]} - {$data[5]} - {$data[6]} - {$data[7]} - {$data[8]} - {$data[9]} - {$data[10]} - {$data[11]} - {$data[12]} - {$data[13]} - {$data[14]} - {$data[15]} - {$data[16]} - {$data[17]}\n";
+            
+            if ($row>2) {
+                DB::table('order_blossom_hill')->insert([
+                    'orderid' => $data[0],
+                    'childid' => $data[1],
+                    'srcDescript' => $data[2],
+                    'hotelDescript' => $data[3],
+                    'rmTypeDescript' => $data[4],
+                    'roomNo' => $data[5],
+                    'name' => $data[6],
+                    'cardNo' => $data[7],
+                    'sex' => intval($data[8]),
+                    'mobile' => $data[9],
+                    'idStreet' => $data[10],
+                    'idType' => $data[11],
+                    'idNo' => $data[12],
+                    'nation' => $data[13],
+                    'arr' => $data[14],
+                    'dep' => $data[15],
+                    'charge' => $data[16],
+                    'payCodeDescript' => $data[17],
+                ]);
+            }
+
+            // if ($row>3) {
+            //     exit;
+            // }
+            $row++;
+        }
+        fclose($handle);
     }
 }
