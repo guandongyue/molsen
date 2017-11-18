@@ -12,7 +12,8 @@
 */
 
 Route::get('/', 'BlogController@index');
+Route::get('/article/{id}', 'BlogController@view');
+Route::match(['get', 'post'], '/article/edit/{id}', 'BlogController@edit')->middleware('auth');
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');

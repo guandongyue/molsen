@@ -4,7 +4,7 @@
 
         @foreach ($articles as $article)
           <div class="blog-post"> 
-            <h2 class="blog-post-title">{{ $article->title }}</h2>
+            <h2 class="blog-post-title"><a href="/article/{{ $article->id }}">{{ $article->title }}</a></h2>
             <p class="blog-post-meta">{{ $article->intime }} by <a href="#">Mark</a></p>
 
             {{--  <p>{{ $article->description }}</p>  --}}

@@ -144,8 +144,11 @@ h6, .h6 {
   margin-bottom: 5px;
   font-size: 28px;
 }
+.blog-post-title a:hover{
+  text-decoration: none;
+}
 .blog-post-meta {
-  margin-bottom: 20px;
+  margin: 5px 0 5px 0;
   color: #999;
 }
 
@@ -163,4 +166,9 @@ h6, .h6 {
 }
 .blog-footer p:last-child {
   margin-bottom: 0;
+}
+
+
+.none-padding {
+  padding: 0 !important;
 }

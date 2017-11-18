@@ -49,6 +49,14 @@
                 </nav>
             </div>
             <div class="col-sm-4">
+              <nav class="blog-nav text-right">
+              @guest
+                <a class="blog-nav-item" href="/login">登录</a>
+              @endguest
+              @auth
+                <a class="blog-nav-item" href="/logout" onclick="event.preventDefault();document.getElementById('logout-form').submit();">退出</a>
+              @endauth
+              </nav>
             </div>
         </div>
       </div>
@@ -111,6 +119,10 @@
       </div><!-- /.row -->
 
     </div><!-- /.container -->
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
 
     <footer class="blog-footer">
       <p>技需勤以出神，艺唯思方入化。</p>
