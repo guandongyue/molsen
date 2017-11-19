@@ -96,7 +96,10 @@
                 width   : "100%",
                 height  : 640,
                 syncScrolling : "single",
-                path    : "/plugin/editor.md/lib/"
+                path    : "/plugin/editor.md/lib/",
+                imageUpload:true,
+                imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL : "/upload?_token={{ csrf_token() }}"
             });
             
             /*

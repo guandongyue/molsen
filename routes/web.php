@@ -18,5 +18,7 @@ Route::post('/article/save', 'BlogController@save')->middleware('auth');
 Route::match(['get', 'post'], '/category/add', 'CategoryController@add')->middleware('auth');
 Route::match(['get', 'post'], '/category/edit/{id}', 'CategoryController@edit')->middleware('auth');
 
+Route::post('/upload', 'UploadController@save')->middleware('auth');
+
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
