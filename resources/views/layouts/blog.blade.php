@@ -23,6 +23,8 @@
     <!-- Custom styles for this template -->
     <link href="/css/blog.css" rel="stylesheet">
 
+    <link href="/plugin/editor.md/css/editormd.css" rel="stylesheet" />
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/assets/js/ie-emulation-modes-warning.js"></script>
@@ -77,7 +79,7 @@
       <div class="row">
 
         <div class="col-sm-8 blog-main">
-
+        <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
           @yield('content')
 
           <nav aria-label="Page navigation">
@@ -125,11 +127,11 @@
             </ol>
           </div>
           <div class="sidebar-module">
-            <h4>Elsewhere</h4>
+            <h4>收藏</h4>
             <ol class="list-unstyled">
               <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
+              <li><a href="http://www.bootcdn.cn/" title="公用CDN资源" target="_blank">BootCDN</a></li>
+              <li><a href="http://www.iconfont.cn/" title="大量在线图标库" target="_blank">iconFont</a></li>
             </ol>
           </div>
         </div><!-- /.blog-sidebar -->
@@ -159,5 +161,27 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="/plugin/editor.md/lib/marked.min.js"></script>
+    <script src="/plugin/editor.md/lib/prettify.min.js"></script>
+    <script src="/plugin/editor.md/lib/raphael.min.js"></script>
+    <script src="/plugin/editor.md/lib/underscore.min.js"></script>
+    <script src="/plugin/editor.md/lib/sequence-diagram.min.js"></script>
+    <script src="/plugin/editor.md/lib/flowchart.min.js"></script>
+    <script src="/plugin/editor.md/lib/jquery.flowchart.min.js"></script>
+    <script src="/plugin/editor.md/editormd.min.js"></script>
+    <script type="text/javascript">
+        var testEditor;
+        $(function () {
+            testEditor = editormd.markdownToHTML("doc-content", {//注意：这里是上面DIV的id
+                htmlDecode: "style,script,iframe",
+                emoji: true,
+                taskList: true,
+                tex: true, // 默认不解析
+                flowChart: true, // 默认不解析
+                sequenceDiagram: true, // 默认不解析
+                codeFold: true,
+        });});
+    </script>
   </body>
 </html>

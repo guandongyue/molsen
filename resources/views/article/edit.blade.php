@@ -37,48 +37,44 @@
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 文章
             </a>
           </div>
-          <div class="panel-body">
+          <div class="panel-body none-padding">
+            @foreach ($articles as $k => $arti)
+              <a href="/article/edit/{{ $arti->id }}" class="list-group-item @if ($arti->id==$article->id) active @endif" style="margin:-1px;">{{ $arti->title }}</a>
+            @endforeach
           </div>
         </div>
       </div>
       <!-- 右侧内容详情 -->
       <div class="col-md-9 col-lg-9 none-padding">
-        <div class="panel panel-default">
-            <div class="panel-heading">文章编辑</div>
-
-            <div class="panel-body">
-              <div>
-                @if (session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
-                <div class="blog-post"> 
-                  <form>
-                    <h2 class="blog-post-title"><input type="email" class="form-control" id="inputTitle" placeholder="请输入标题" value="{{ $article->title }}"></h2>
-                    
-                      <div class="row">
-                        <div class="col-sm-8">
-                          <p class="blog-post-meta">{{ $article->intime }} by <a href="#">{{ $article->category }}Mark</a></p>
-                        </div>
-                        <div class="col-sm-4 text-right">
-                        @auth
-                          <button type="submit" class="btn btn-default">
-                              保存
-                          </button>
-                        @endauth
-                        </div>
-                      </div>
-
-                    <p>{{ $article->description }}</p>
-                    <hr>
-                    <p>{{ $article->note }}</p>
-                  </form>
-                </div><!-- /.blog-post -->
+        <form method="POST" action="/article/edit">
+          {{ csrf_field() }}
+          <div class="panel panel-default">
+              <div id="article-post-header" class="panel-heading bg-success">
+                <div class="row">
+                  <div class="col-md-9 col-lg-9">文章编辑</div>
+                  <div class="col-md-3 col-lg-3 text-right">
+                    <button id="button-article-save" type="button" class="btn btn-default btn-xs" style="line-height: 1.4;">保存</button>
+                    <button id="button-article-publish" type="button" class="btn btn-primary btn-xs" style="line-height: 1.4;">发布</button>
+                  </div>
+                </div>
               </div>
-            </div>
-        </div>
+              <div class="panel-body">
+                <div>
+                  <div class="blog-post"> 
+                    <h2 class="blog-post-title">
+                      <input type="text" class="form-control" id="articleFormTitle" placeholder="请输入标题" value="{{ $article->title }}">
+                    </h2>
+                    <p>{{ $article->description }}</p>
+                    <p>
+                      <div id="test-editormd">
+                        <textarea id="articleFormNote" style="display:none;">{{ $article->note }}</textarea>
+                      </div>
+                    </p>
+                  </div><!-- /.blog-post -->
+                </div>
+              </div>
+          </div>
+        </form>
       </div>
     </div>
 </div>

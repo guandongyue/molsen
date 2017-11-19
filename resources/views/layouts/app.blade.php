@@ -18,6 +18,8 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/blog.css" rel="stylesheet">
+
+    <link href="/plugin/editor.md/css/editormd.css" rel="stylesheet" />
 </head>
 <body>
     <div id="app">
@@ -83,6 +85,33 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="/plugin/editor.md/editormd.min.js"></script>
+    <script type="text/javascript">
+        var testEditor;
+
+        $(function() {
+            testEditor = editormd("test-editormd", {
+                width   : "100%",
+                height  : 640,
+                syncScrolling : "single",
+                path    : "/plugin/editor.md/lib/"
+            });
+            
+            /*
+            // or
+            testEditor = editormd({
+                id      : "test-editormd",
+                width   : "90%",
+                height  : 640,
+                path    : "../lib/"
+            });
+            */
+        });
+    </script>
+
+
 <script>
 $("#div-category").click(function(){
     if ( $("#div-button").is(':hidden') ) {
@@ -120,6 +149,32 @@ $("#button-category-save").click(function(){
     });
     $("#div-button").hide();
     $("#inputCategory").hide();
+});
+
+$("#button-article-save").click(function(){
+    $.ajax({
+        method: "POST",
+        url: "/article/save",
+        data: { title: $("#articleFormTitle").val(), note: $("#articleFormNote").val(), _token: '{{ csrf_token() }}', status:1, dosubmit:1 }
+    }).done(function( msg ) {
+        if (msg.status==1) {
+            $("#article-post-header").animate({ backgroundColor:'#dff0d8'},1000);
+            $("#article-post-header").delay(1000).animate({ backgroundColor:'#fff'},1000);
+            // .prop('style', 'background-color:#dff0d8;');
+        }
+    });
+});
+
+$("#button-article-publish").click(function(){
+    $.ajax({
+        method: "POST",
+        url: "/article/save",
+        data: { title: $("#articleFormTitle").val(), note: $("#articleFormNote").val(), _token: '{{ csrf_token() }}', status:1, dosubmit:1 }
+    }).done(function( msg ) {
+        if (msg.status==1) {
+            location.href = "/article/"+msg.param.id;
+        }
+    });
 });
 </script>
 </body>
