@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-sm-8">
                 <nav class="blog-nav">
-                <a class="blog-nav-item active" href="#">{{ config('app.name', 'Laravel') }}</a>
+                <a class="blog-nav-item active" href="/">{{ config('app.name', 'Laravel') }}</a>
                 @foreach ($categorys as $k => $category)
                 <a class="blog-nav-item" href="#">{{ $category }}</a>
                 @endforeach
@@ -67,6 +67,11 @@
       <div class="blog-header">
         {{--  <h1 class="blog-title">The Bootstrap Blog</h1>
         <p class="lead blog-description">The official example template of creating a blog with Bootstrap.</p>  --}}
+        <ol class="breadcrumb">
+          <li><a href="/">首页</a></li>
+          <li><a href="#">Library</a></li>
+          <li class="active">Data</li>
+        </ol>
       </div>
 
       <div class="row">
@@ -75,10 +80,23 @@
 
           @yield('content')
 
-          <nav>
-            <ul class="pager">
-              <li><a href="#">Previous</a></li>
-              <li><a href="#">Next</a></li>
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
             </ul>
           </nav>
 

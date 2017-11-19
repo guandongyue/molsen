@@ -82,5 +82,45 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+
+<script>
+$("#div-category").click(function(){
+    if ( $("#div-button").is(':hidden') ) {
+        $("#div-button").show();
+    } else {
+        $("#div-button").hide();
+    }
+    if ( $("#inputCategory").is(':hidden') ) {
+        $("#inputCategory").show();
+    } else {
+        $("#inputCategory").hide();
+    }
+});
+
+$("#button-category-cancel").click(function(){
+    $("#div-button").hide();
+    $("#inputCategory").hide();
+});
+
+$("#button-category-save").click(function(){
+    var categoryName = $("#inputCategory").val();
+    $.ajax({
+        method: "POST",
+        url: "/category/add",
+        data: { name: categoryName, _token: '{{ csrf_token() }}' }
+    }).done(function( msg ) {
+        if (msg.status==1) {
+            $("#category-list a").each(function(){
+                $(this).prop('class', 'list-group-item');
+            });
+            $("#category-list").append('<a href="#" class="list-group-item active" style="margin:-1px;">'+categoryName+'</a>');
+        } else {
+            console.log(msg.msg);
+        }
+    });
+    $("#div-button").hide();
+    $("#inputCategory").hide();
+});
+</script>
 </body>
 </html>
