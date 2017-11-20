@@ -45,7 +45,7 @@
                 <nav class="blog-nav">
                 <a class="blog-nav-item active" href="/">{{ config('app.name', 'Laravel') }}</a>
                 @foreach ($categorys as $k => $category)
-                <a class="blog-nav-item" href="#">{{ $category }}</a>
+                <a class="blog-nav-item" href="#">{{ $category->name }}</a>
                 @endforeach
                 {{--  <a class="blog-nav-item" href="#">关于我</a>  --}}
                 </nav>

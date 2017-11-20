@@ -13,7 +13,10 @@
 
 Route::get('/', 'BlogController@index');
 Route::get('/article/{id}', 'BlogController@view');
+Route::get('/article/category/{categoryid}', 'BlogController@list');
+
 Route::get('/article/edit/{id}', 'BlogController@edit')->middleware('auth');
+Route::get('/article/delete/{id}', 'BlogController@delete')->middleware('auth');
 Route::post('/article/save', 'BlogController@save')->middleware('auth');
 Route::match(['get', 'post'], '/category/add', 'CategoryController@add')->middleware('auth');
 Route::match(['get', 'post'], '/category/edit/{id}', 'CategoryController@edit')->middleware('auth');

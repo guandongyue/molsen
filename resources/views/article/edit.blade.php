@@ -23,7 +23,7 @@
                 </div>
               </div>
             @foreach ($categorys as $k => $category)
-              <a href="#" class="list-group-item @if ($k==$article->category) active @endif" style="margin:-1px;">{{ $category }}</a>
+              <a href="#" data-bind-id="category-{{ $category->id }}" class="list-group-item @if ($category->id==$article->category) active @endif" style="margin:-1px;">{{ $category->name }}</a>
             @endforeach
             </div>
           </div>
@@ -33,11 +33,11 @@
       <div class="col-md-2 col-lg-2 none-padding">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <a class="btn btn-link btn-xs" style="line-height: 1.4;text-decoration: none;">
+            <a id="div-article" class="btn btn-link btn-xs" style="line-height: 1.4;text-decoration: none;">
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 文章
             </a>
           </div>
-          <div class="panel-body none-padding">
+          <div id="div-title-list" class="panel-body none-padding">
             @foreach ($articles as $k => $arti)
               <a href="/article/edit/{{ $arti->id }}" class="list-group-item @if ($arti->id==$article->id) active @endif" style="margin:-1px;">{{ $arti->title }}</a>
             @endforeach
@@ -53,6 +53,7 @@
                 <div class="row">
                   <div class="col-md-9 col-lg-9">文章编辑</div>
                   <div class="col-md-3 col-lg-3 text-right">
+                    <button onclick="window.location.href='/article/delete/{{ $article->id }}'" type="button" class="btn btn-danger btn-xs" style="line-height: 1.4;">删除</button>
                     <button id="button-article-save" type="button" class="btn btn-default btn-xs" style="line-height: 1.4;">保存</button>
                     <button id="button-article-publish" type="button" class="btn btn-primary btn-xs" style="line-height: 1.4;">发布</button>
                   </div>
@@ -64,6 +65,13 @@
                     <h2 class="blog-post-title">
                       <input type="text" class="form-control" id="articleFormTitle" placeholder="请输入标题" value="{{ $article->title }}">
                     </h2>
+                    <p>
+                    @foreach ($categorys as $k => $category)
+                      <label class="radio-inline">
+                        <input type="radio" name="articleFormCategory" value="{{ $category->id }}" @if ($category->id==$article->category) checked @endif> {{ $category->name }}
+                      </label>
+                    @endforeach
+                    </p>
                     <p>{{ $article->description }}</p>
                     <p>
                       <div id="test-editormd">
