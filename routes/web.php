@@ -25,3 +25,12 @@ Route::post('/upload', 'UploadController@save')->middleware('auth');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+Route::Group([
+    'middleware'=>'admin.login', 
+    'prefix' => 'admin', 
+    'namespace' => 'Admin'], function(){
+
+});
