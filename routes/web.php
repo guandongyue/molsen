@@ -28,9 +28,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::Group([
-    'middleware'=>'admin.login', 
-    'prefix' => 'admin', 
-    'namespace' => 'Admin'], function(){
-
+Route::Group(['middleware'=>'auth', 'prefix' => 'admin', 'namespace' => 'Admin'], function(){
+    Route::get('/master/list/{typeid?}', 'MasterController@list');
+    Route::get('/master/edit/{id}', 'MasterController@edit');
+    Route::get('/article/list/{typeid?}', 'ArticleController@edit');
+    Route::get('/article/edit/{id}', 'ArticleController@edit');
 });
