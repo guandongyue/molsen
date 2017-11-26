@@ -11,15 +11,29 @@ class MasterController extends Controller
 {
     public function list(Request $request)
     {
-        $datas = Master::select('id', 'name')->orderBy('id', 'desc')->get();
+        $datas = Master::select()->orderBy('id', 'desc')->get();
         return view('admin.master', ['datas'=>$datas]);
     }
 
     public function edit(Request $request)
     {
-        $category = Master::where('id', '=', $request->id)->first();
-        $category->name = $request->name;
-        $category->save();
-        return view('admin.masterEdit', ['articles'=>1]);
+        $id = intval($request->id);
+        $data = [];
+        if ($id>0) $data = Master::where('id', '=', $request->id)->first();
+
+        $datas = Master::select('id', 'name')->orderBy('id', 'desc')->get();
+
+        return view('admin.masterEdit', ['data'=>$data, 'datas'=>$datas]);
+    }
+
+    public function save(Request $request)
+    {
+        if($request->name=='') return ['status'=>0, 'msg'=>'名称不能为空.'];
+
+        $data = Master::updateOrCreate(
+            ['id'=>$request->editId], 
+            ['pid'=>intval($request->pid), 'name'=>$request->name, 'key'=>$request->key, 'value'=>$request->value]
+        );
+        return ['status'=>1, 'msg'=>'successful.', 'param'=>['id'=>$data->id, 'name'=>$data->name]];
     }
 }

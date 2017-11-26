@@ -30,7 +30,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::Group(['middleware'=>'auth', 'prefix' => 'admin', 'namespace' => 'Admin'], function(){
     Route::get('/master/list/{typeid?}', 'MasterController@list');
-    Route::get('/master/edit/{id}', 'MasterController@edit');
+    Route::get('/master/edit/{id?}', 'MasterController@edit');
+    Route::post('/master/save', 'MasterController@save');
     Route::get('/article/list/{typeid?}', 'ArticleController@edit');
     Route::get('/article/edit/{id}', 'ArticleController@edit');
 });

@@ -1,17 +1,22 @@
 @extends('layouts.admin')
 
+@push('css')
+<!-- DataTables -->
+<link rel="stylesheet" href="/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+@endpush
+
 @section('content')
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        分类列表
-        <small>文章类型</small>
+        系统设置
+        <small>Master配置</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-        <li><a href="#">内容管理</a></li>
-        <li class="active">文章分类</li>
+        <li><a href="#">系统设置</a></li>
+        <li class="active">Master配置</li>
       </ol>
     </section>
 
@@ -19,21 +24,21 @@
     <section class="content">
       <div class="row">
         <div class="col-xs-2">
-            <div class="box">
+            <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">树形菜单</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                  <ul class="sidebar-menu" data-widget="tree">
+                  <ul class="molsen-tree-menu" data-widget="tree">
                     <li class="treeview">
                       <a href="#">
-                        <i class="fa fa-share"></i> <span>Multilevel</span>
+                        <i class="fa fa-bars"></i> <span>Multilevel</span>
                         <span class="pull-right-container">
                           <i class="fa fa-angle-left pull-right"></i>
                         </span>
                       </a>
-                      {{--  <ul class="treeview-menu">
+                      <ul class="treeview-menu">
                         <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
                         <li class="treeview">
                           <a href="#"><i class="fa fa-circle-o"></i> Level One
@@ -57,7 +62,12 @@
                           </ul>
                         </li>
                         <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                      </ul>  --}}
+                      </ul>
+                    </li>
+                    <li>
+                      <a href="/admin/master/edit" class="btn btn-block btn-default">
+                        <i class="fa fa-plus"></i> <span>创建</span>
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -119,3 +129,21 @@
     <!-- /.content -->
 
 @endsection
+
+@push('scripts')
+<!-- DataTables -->
+<script src="/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script>
+  $(function () {
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>
+@endpush
