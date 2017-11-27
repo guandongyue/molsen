@@ -30,46 +30,10 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                  <ul class="molsen-tree-menu" data-widget="tree">
-                    <li class="treeview">
-                      <a href="#">
-                        <i class="fa fa-bars"></i> <span>Multilevel</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                      </a>
-                      <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                        <li class="treeview">
-                          <a href="#"><i class="fa fa-circle-o"></i> Level One
-                            <span class="pull-right-container">
-                              <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                          </a>
-                          <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                            <li class="treeview">
-                              <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                                <span class="pull-right-container">
-                                  <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                              </a>
-                              <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                      </ul>
-                    </li>
-                    <li>
-                      <a href="/admin/master/edit" class="btn btn-block btn-default">
-                        <i class="fa fa-plus"></i> <span>创建</span>
-                      </a>
-                    </li>
-                  </ul>
+                  <div id="treeview" class=""></div>
+                  <a href="/admin/master/edit" class="btn btn-block btn-default">
+                    <i class="fa fa-plus"></i> <span>创建</span>
+                  </a>
                 </div>
             </div>
         </div>
@@ -90,6 +54,7 @@
                   <th>VALUE</th>
                   <th>更新时间</th>
                   <th>入库时间</th>
+                  <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -102,6 +67,16 @@
                   <td>{{ $data->value }}</td>
                   <td>{{ $data->uptime }}</td>
                   <td>{{ $data->intime }}</td>
+                  <td class="col-sm-1">
+                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                      <div class="btn-group" role="group">
+                        <a href="{{ $data->id }}" class="btn btn-default btn-xs">编辑</a>
+                      </div>
+                      <div class="btn-group" role="group">
+                        <a href="javascript:confirm('Press a button!');" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-danger">删除</a>
+                      </div>
+                    </div>
+                  </td>
                 </tr>
                 @endforeach
                 </tbody>
@@ -114,6 +89,7 @@
                   <th>VALUE</th>
                   <th>更新时间</th>
                   <th>入库时间</th>
+                  <th>操作</th>
                 </tr>
                 </tfoot>
               </table>
@@ -132,18 +108,26 @@
 
 @push('scripts')
 <!-- DataTables -->
+<script src="/js/bootstrap-treeview.js"></script>
 <script src="/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script>
-  $(function () {
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
+$(function () {
+  $('#example2').DataTable({
+    'paging'      : true,
+    'lengthChange': false,
+    'searching'   : false,
+    'ordering'    : true,
+    'info'        : true,
+    'autoWidth'   : false
   })
+});
+
+$('#treeview').treeview({
+  levels: 1,
+  showTags: true,
+  enableLinks: true,
+  data: '@json($tree)'
+});
 </script>
 @endpush

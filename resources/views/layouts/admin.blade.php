@@ -35,6 +35,29 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     @yield('content')
+
+    <div class="modal modal-danger fade" id="modal-danger">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Danger Modal</h4>
+          </div>
+          <div class="modal-body">
+            <p>One fine body&hellip;</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-outline">Save changes</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -64,6 +87,8 @@
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+{{--  <script src="/adminlte/bower_components/fastclick/lib/fastclick.js"></script>  --}}
 <!-- AdminLTE App -->
 <script src="/adminlte/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
