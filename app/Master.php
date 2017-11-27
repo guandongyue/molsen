@@ -79,13 +79,13 @@ class Master extends Model
         foreach ($tree as $k => $item) {
             if (empty($item->children)) {
                 if ($selectedID == $item->id) {
-                    $result[] = ['text'=>$item->name, 'href'=>"{$href}/{$item->id}", 'tags'=>['0'], 'state'=>['selected'=>true]];
+                    $result[] = ['text'=>$item->name, 'href'=>"{$href}/{$item->id}", 'tags'=>['0'], 'state'=>['selected'=>true, 'expanded'=>true]];
                 } else {
                     $result[] = ['text'=>$item->name, 'href'=>"{$href}/{$item->id}", 'tags'=>['0']];
                 }
             } else {
                 if ($selectedID == $item->id) {
-                    $result[] = ['text'=>$item->name, 'href'=>"{$href}/{$item->id}", 'nodes'=>self::buildTreeView($item->children), 'tags'=>[count($item->children)], 'state'=>['selected'=>true]];
+                    $result[] = ['text'=>$item->name, 'href'=>"{$href}/{$item->id}", 'nodes'=>self::buildTreeView($item->children), 'tags'=>[count($item->children)], 'state'=>['selected'=>true, 'expanded'=>true]];
                 } else {
                     $result[] = ['text'=>$item->name, 'href'=>"{$href}/{$item->id}", 'nodes'=>self::buildTreeView($item->children), 'tags'=>[count($item->children)]];
                 }

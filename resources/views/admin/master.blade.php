@@ -123,6 +123,8 @@ $(function () {
   })
 });
 
+var json = '@json($tree)';
+
 $('#treeview').treeview({
   levels: 1,
   showTags: true,
