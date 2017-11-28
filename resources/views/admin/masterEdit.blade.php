@@ -36,52 +36,48 @@
             <input type="hidden" name="editId" value="@isset($records){{ $data->id }}@endisset">
               {{ csrf_field() }}
               <div class="box-body">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">Minimal</label>
-                      <div class="col-sm-10">
-                        <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Alabama</option>
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
-                        </select>
-                      </div>
-                      {{--  <label class="col-sm-2 control-label">所属上级</label>
-                      <div class="col-sm-10">
-                        <div class="dropdown">
-                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            根分类
-                            <span class="caret"></span>
-                          </button>
-                          <ul id="treeview" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                          </ul>
-                        </div>
-                      </div>  --}}
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Minimal</label>
+                  <div class="col-sm-10">
+                    <select class="form-control select2" style="width: 100%;">
+                      <option selected="selected">Alabama</option>
+                      <option>Alaska</option>
+                      <option>California</option>
+                      <option>Delaware</option>
+                      <option>Tennessee</option>
+                      <option>Texas</option>
+                      <option>Washington</option>
+                    </select>
+                  </div>
+                  {{--  <label class="col-sm-2 control-label">所属上级</label>
+                  <div class="col-sm-10">
+                    <div class="dropdown">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        根分类
+                        <span class="caret"></span>
+                      </button>
+                      <ul id="treeview" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      </ul>
                     </div>
+                  </div>  --}}
+                </div>
 
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">名称</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="name" class="form-control" placeholder="请输入一个配置名称...">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">KEY</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="key" class="form-control" placeholder="请输入一个key...">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">VALUE</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="value" class="form-control" placeholder="请输入一个value...">
-                      </div>
-                    </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">名称</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="name" class="form-control" placeholder="请输入一个配置名称...">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">KEY</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="key" class="form-control" placeholder="请输入一个key...">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">VALUE</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="value" class="form-control" placeholder="请输入一个value...">
                   </div>
                 </div>
               </div>
