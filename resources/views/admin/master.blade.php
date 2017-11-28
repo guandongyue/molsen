@@ -22,6 +22,7 @@
 
     <!-- Main content -->
     <section class="content">
+    {{ csrf_field() }}
       <div class="row">
         <div class="col-xs-2">
             <div class="box box-primary">
@@ -37,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-10">
+        <div id="main-div" class="col-xs-10">
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">详细列表</h3>
@@ -70,10 +71,11 @@
                   <td class="col-sm-1">
                     <div class="btn-group btn-group-justified" role="group" aria-label="...">
                       <div class="btn-group" role="group">
-                        <a href="{{ $data->id }}" class="btn btn-default btn-xs">编辑</a>
+                        <a href="/admin/master/edit/{{ $data->id }}" class="btn btn-default btn-xs">编辑</a>
                       </div>
                       <div class="btn-group" role="group">
-                        <a href="javascript:confirm('Press a button!');" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-danger">删除</a>
+                      {{--   data-toggle="modal" data-target="#modal-danger"   --}}
+                        <a href="#" data-id="{{ $data->id }}" data-title="{{ $data->name }}" class="deleteMaster btn btn-danger btn-xs">删除</a>
                       </div>
                     </div>
                   </td>
@@ -123,7 +125,44 @@ $(function () {
   })
 });
 
-var json = '@json($tree)';
+$(".deleteMaster").click(function(){
+  var delID = $(this).attr('data-id');
+  $.confirm({
+    title: '注意！',
+    content: '确认要删除【'+$(this).attr('data-title')+'】吗？',
+    buttons: {
+      confirm: {
+        text: '确认',
+        btnClass: 'btn-danger',
+        keys: ['enter'],
+        action: function(){
+          $.ajax({
+            method: "POST",
+            url: "/admin/master/delete",
+            data: { 
+              id: delID,
+              _token: $("input[name='_token']").val() 
+            }
+          }).done(function( msg ) {
+            if (msg.status==1) {
+              molsen.alert("#main-div", 'success', msg.msg, function(){
+                window.location.reload();
+              });
+            } else {
+              molsen.alert("#main-div", 'danger', msg.msg);
+            }
+          });
+        }
+      },
+      cancel: {
+        text: '取消',
+        keys: ['esc'],
+        action: function(){
+        }
+      }
+    }
+  });
+});
 
 $('#treeview').treeview({
   levels: 1,

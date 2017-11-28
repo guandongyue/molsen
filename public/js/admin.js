@@ -15,17 +15,18 @@ var Molsen = (function(window) {
             console.log(this.name);
         },
         // type: success danger warning info
-        alert: function(id, type, msg) {
+        alert: function(id, type, msg, callback=function(){}) {
+            var title = type=='success' ? '成功' : '失败';
             $(id).prepend('<div class="alert alert-'+type+'" role="alert">' + 
             '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' + 
-            '<span aria-hidden="true">&times;</span></button><strong>'+type+'!</strong> '+msg+'</div>');
+            '<span aria-hidden="true">&times;</span></button><strong>'+title+'!</strong> '+msg+'</div>');
             setTimeout(function() {
               $(".alert").fadeTo(500, 0).slideUp(500, function(){
                 $(this).remove(); 
+                callback();
               });
-            }, 4000);
+            }, 1000);
         }
-        
     }
 
     Molsen.fn.init.prototype = Molsen.fn;

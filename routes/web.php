@@ -32,6 +32,7 @@ Route::Group(['middleware'=>'auth', 'prefix' => 'admin', 'namespace' => 'Admin']
     Route::get('/master/list/{typeid?}', 'MasterController@list');
     Route::get('/master/edit/{id?}', 'MasterController@edit');
     Route::post('/master/save', 'MasterController@save');
+    Route::post('/master/delete', 'MasterController@delete');
     Route::get('/article/list/{typeid?}', 'ArticleController@edit');
     Route::get('/article/edit/{id}', 'ArticleController@edit');
 });

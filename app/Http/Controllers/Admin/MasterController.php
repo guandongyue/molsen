@@ -23,8 +23,9 @@ class MasterController extends Controller
         if ($id>0) $data = Master::where('id', '=', $request->id)->first();
 
         $datas = Master::select('id', 'name')->orderBy('id', 'desc')->get();
+        $tree = Master::tree();
 
-        return view('admin.masterEdit', ['data'=>$data, 'datas'=>$datas]);
+        return view('admin.masterEdit', ['data'=>$data, 'datas'=>$datas, 'tree'=>Master::buildTreeView($tree, $request->typeid)]);
     }
 
     public function save(Request $request)
@@ -36,5 +37,12 @@ class MasterController extends Controller
             ['pid'=>intval($request->pid), 'name'=>$request->name, 'key'=>$request->key, 'value'=>$request->value]
         );
         return ['status'=>1, 'msg'=>'successful.', 'param'=>['id'=>$data->id, 'name'=>$data->name]];
+    }
+
+    public function delete(Request $request)
+    {
+        $data = Master::find($request->id);
+        $data->delete();
+        return ['status'=>1, 'msg'=>"{$data->name} 已从系统删除。", []];
     }
 }

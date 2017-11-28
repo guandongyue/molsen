@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
 @push('css')
+<!-- Select2 -->
+<link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
 @endpush
 
 @section('content')
@@ -34,33 +36,52 @@
             <input type="hidden" name="editId" value="@isset($records){{ $data->id }}@endisset">
               {{ csrf_field() }}
               <div class="box-body">
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">所属上级</label>
-                  <div class="col-sm-10">
-                    <select name="pid" class="form-control">
-                    @foreach ($datas as $master)
-                        <option value="{{ $master->id }}">{{ $master->name }}</option>
-                    @endforeach
-                    </select>
-                  </div>
-                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Minimal</label>
+                      <div class="col-sm-10">
+                        <select class="form-control select2" style="width: 100%;">
+                          <option selected="selected">Alabama</option>
+                          <option>Alaska</option>
+                          <option>California</option>
+                          <option>Delaware</option>
+                          <option>Tennessee</option>
+                          <option>Texas</option>
+                          <option>Washington</option>
+                        </select>
+                      </div>
+                      {{--  <label class="col-sm-2 control-label">所属上级</label>
+                      <div class="col-sm-10">
+                        <div class="dropdown">
+                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            根分类
+                            <span class="caret"></span>
+                          </button>
+                          <ul id="treeview" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                          </ul>
+                        </div>
+                      </div>  --}}
+                    </div>
 
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">名称</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="name" class="form-control" placeholder="请输入一个配置名称...">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">KEY</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="key" class="form-control" placeholder="请输入一个key...">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">VALUE</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="value" class="form-control" placeholder="请输入一个value...">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">名称</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="name" class="form-control" placeholder="请输入一个配置名称...">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">KEY</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="key" class="form-control" placeholder="请输入一个key...">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">VALUE</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="value" class="form-control" placeholder="请输入一个value...">
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -84,6 +105,9 @@
 @endsection
 
 @push('scripts')
+<script src="/js/bootstrap-treeview.js"></script>
+<!-- Select2 -->
+<script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
 <script>
 $("button[type='reset']").trigger("click");
 
@@ -102,8 +126,9 @@ $("#button-save").click(function(){
     }
   }).done(function( msg ) {
     if (msg.status==1) {
-      molsen.alert("#main-div", 'success', msg.msg);
-      window.location.href = "/admin/master/list";
+      molsen.alert("#main-div", 'success', msg.msg, function(){
+        window.location.href = "/admin/master/list";
+      });
     } else {
       molsen.alert("#main-div", 'danger', msg.msg);
       $("#button-save").removeClass('disabled');
@@ -129,12 +154,36 @@ $("#button-save-continue").click(function(){
     $("#button-save").removeClass('disabled');
     $("#button-save-continue").removeClass('disabled');
     if (msg.status==1) {
-      molsen.alert("#main-div", 'success', msg.msg);
-      $("#myForm")[0].reset();
+      molsen.alert("#main-div", 'success', msg.msg, function(){
+        window.location.reload();
+      });
     } else {
       molsen.alert("#main-div", 'danger', msg.msg);
     }
   });
 });
+
+
+var initSelectableTree = function() {
+  return $('#treeview').treeview({
+    levels: 99,
+    data: '@json($tree)',
+    onNodeSelected: function(event, node) {
+      console.log(node.text + ' was selected');
+    },
+    onNodeUnselected: function (event, node) {
+      console.log(node.text + ' was unselected');
+    }
+  });
+};
+var $selectableTree = initSelectableTree();
+
+
+
+$(function () {
+  //Initialize Select2 Elements
+  $('.select2').select2()
+})
+</script>
 </script>
 @endpush
