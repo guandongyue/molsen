@@ -10,14 +10,14 @@
   <link rel="stylesheet" href="/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
+  
+  @stack('css')
+  
   <!-- Theme style -->
   <link rel="stylesheet" href="/adminlte/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="/adminlte/dist/css/skins/skin-blue.min.css">
-
-  @stack('css')
-
   <link rel="stylesheet" href="/css/jquery-confirm.min.css">
   <!-- Molsen's CSS -->
   <link rel="stylesheet" href="/css/admin.css">

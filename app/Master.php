@@ -18,6 +18,20 @@ class Master extends Model
         return $tree;
     }
 
+    public static function buildSelect($tree)
+    {
+        $list = [];
+        if(!is_array($tree) || count($tree)==0) return $list;
+
+        foreach ($tree as $k => $item) {
+            $children = $item['children'];
+            unset($item['children']);
+            $list[] = $item;
+            $list = array_merge($list, self::buildSelect($children));
+        }
+        return $list;
+    }
+
     /**
      * 放弃使用
      */
@@ -94,13 +108,14 @@ class Master extends Model
         return $result;
     }
 
-    private static function buildTree(&$data, $pid=0)
+    private static function buildTree(&$data, $pid=0, $level=0)
     {
         $tree = [];
         foreach ($data as $k => $item) {
             if ($item['pid'] == $pid) {
                 unset($data[$k]);
-                $item['children'] = self::buildTree($data, $item['id']);
+                $item['level'] = $level;
+                $item['children'] = self::buildTree($data, $item['id'], $level+1);
                 $tree[] = $item;
             }
         }

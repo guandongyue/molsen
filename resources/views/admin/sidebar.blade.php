@@ -25,7 +25,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-home"></i> <span>我的面板</span>
             <span class="pull-right-container">
@@ -33,11 +33,11 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+            <li><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
           </ul>
         </li>
-        <li class="active treeview">
+        <li class="{{ Request::is('admin/article/*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-book"></i> <span>内容管理</span>
             <span class="pull-right-container">
@@ -45,11 +45,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="/admin/category/list"><i class="fa fa-circle-o"></i> 文章分类</a></li>
-            <li><a href="/admin/article/list"><i class="fa fa-circle-o"></i> 文章列表</a></li>
+            <li class="{{ Request::is('admin/article/list') ? 'active' : '' }}"><a href="/admin/article/list"><i class="fa fa-circle-o"></i> 文章列表</a></li>
           </ul>
         </li>
-        <li class="active treeview">
+        <li class="{{ Request::is('admin/master/*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-cogs"></i> <span>系统设置</span>
             <span class="pull-right-container">
@@ -57,7 +56,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="/admin/master/list"><i class="fa fa-cog"></i> Master配置</a></li>
+            <li class="{{ Request::is('admin/master/list') ? 'active' : '' }}"><a href="/admin/master/list"><i class="fa fa-cog"></i> Master配置</a></li>
           </ul>
         </li>
       </ul>

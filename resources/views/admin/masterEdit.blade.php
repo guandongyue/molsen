@@ -40,8 +40,10 @@
                   <label class="col-sm-2 control-label">Minimal</label>
                   <div class="col-sm-10">
                     <select class="form-control select2" style="width: 100%;">
-                      <option selected="selected">Alabama</option>
-                      <option>Alaska</option>
+                      <option selected="selected"> -- 请选择 -- </option>
+                      @foreach ($tree as $child)
+                      <option value="{{ $child->id }}">{{ str_repeat('-', $child->level*2) }}{{ $child->name }}</option>
+                      @endforeach
                       <option>California</option>
                       <option>Delaware</option>
                       <option>Tennessee</option>

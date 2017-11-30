@@ -25,7 +25,7 @@ class MasterController extends Controller
         $datas = Master::select('id', 'name')->orderBy('id', 'desc')->get();
         $tree = Master::tree();
 
-        return view('admin.masterEdit', ['data'=>$data, 'datas'=>$datas, 'tree'=>Master::buildTreeView($tree, $request->typeid)]);
+        return view('admin.masterEdit', ['data'=>$data, 'datas'=>$datas, 'tree'=>Master::buildSelect($tree)]);
     }
 
     public function save(Request $request)
