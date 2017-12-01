@@ -29,19 +29,18 @@
             <div class="box-header">
               <h3 class="box-title">列表</h3>
               <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="search" id="table_search" class="form-control pull-right" placeholder="Search">
+                <div class="input-group input-group-sm" style="width: 200px;">
+                  <input type="search" id="table_search" class="form-control pull-right" placeholder="搜索">
                   <div class="input-group-btn">
                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                   </div>
                   <a href="/admin/article/edit" class="btn btn-primary form-control pull-right">创建</a>
                 </div>
-                
               </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="example2" class="table table-bordered table-hover" data-page-length='15'>
                 <thead>
                 <tr>
                   <th>ID</th>
@@ -102,12 +101,26 @@
 <script>
 $(function () {
   var table = $('#example2').DataTable({
-    'paging'      : true,
-    'lengthChange': false,
-    'ordering'    : true,
-    'info'        : true,
-    'autoWidth'   : false,
-    "dom": "lrtip"
+    paging        : true,
+    lengthChange  : false,
+    ordering      : true,
+    info          : true,
+    pagingType    : "full_numbers",
+    autoWidth     : false,
+    dom           : "lrtip",
+    fnInfoCallback: function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {
+      return iStart +" ~ "+ iEnd+" 共 "+iTotal+" 条记录";
+    },
+    language      : {
+        emptyTable: "<li class='text-danger' align='center'>没有数据</li>",
+        paginate:
+        {
+            previous: "<",
+            next: ">",
+            first: "|<",
+            last: ">|"
+        }
+    }
   });
 
   $('#table_search').on( 'keyup', function () {

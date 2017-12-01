@@ -3,6 +3,7 @@
 @push('css')
 <!-- Select2 -->
 <link rel="stylesheet" href="/adminlte/bower_components/select2/dist/css/select2.min.css">
+<link href="/plugin/editor.md/css/editormd.css" rel="stylesheet" />
 @endpush
 
 @section('content')
@@ -10,13 +11,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        系统设置
-        <small>Master配置</small>
+        文章
+        <small>列表</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-        <li><a href="#">系统设置</a></li>
-        <li class="active">Master配置</li>
+        <li><a href="#">内容管理</a></li>
+        <li class="active">文章列表</li>
       </ol>
     </section>
 
@@ -32,66 +33,42 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form id="myForm" class="form-horizontal" method="POST" action="/admin/master/save">
-            <input type="hidden" name="editId" value="@isset($records){{ $data->id }}@endisset">
+            <input type="hidden" name="editId" value="@isset($data){{ $data->id }}@endisset">
               {{ csrf_field() }}
               <div class="box-body">
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Minimal</label>
-                  <div class="col-sm-10">
-                    <select class="form-control select2" style="width: 100%;">
-                      <option selected="selected"> -- 请选择 -- </option>
+                  {{--  <label class="col-sm-2 control-label">标签</label>  --}}
+                  <div class="col-sm-12">
+                    <select name="tags" id="form-tags" class="form-control select2" multiple="multiple" data-placeholder="选择一个标签" style="width: 100%;">
                       @foreach ($tags as $child)
-                      <option value="{{ $child->id }}">{{ str_repeat('-', $child->level*2) }}{{ $child->name }}</option>
+                      <option value="{{ $child->id }}">{{ $child->name }}</option>
                       @endforeach
-                      <option>California</option>
-                      <option>Delaware</option>
-                      <option>Tennessee</option>
-                      <option>Texas</option>
-                      <option>Washington</option>
                     </select>
                   </div>
-                  {{--  <label class="col-sm-2 control-label">所属上级</label>
-                  <div class="col-sm-10">
-                    <div class="dropdown">
-                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        根分类
-                        <span class="caret"></span>
-                      </button>
-                      <ul id="treeview" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                      </ul>
-                    </div>
-                  </div>  --}}
+                </div>
+                <div class="form-group">
+                  {{--  <label class="col-sm-2 control-label">标题</label>  --}}
+                  <div class="col-sm-12">
+                    <input type="text" name="title" value="{{ $data->title }}" class="form-control" placeholder="请输入标题...">
+                  </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">名称</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="name" class="form-control" placeholder="请输入一个配置名称...">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">KEY</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="key" class="form-control" placeholder="请输入一个key...">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">VALUE</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="value" class="form-control" placeholder="请输入一个value...">
+                  {{--  <label class="col-sm-2 control-label">内容</label>  --}}
+                  <div class="col-sm-12">
+                    <div id="test-editormd">
+                      <textarea id="articleFormNote" style="display:none;">{{ $data->note }}</textarea>
+                    </div>
                   </div>
                 </div>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <button type="reset" class="hidden"></button>
-                <a class="btn btn-default" href="/admin/master/list">取消</a>
+                <a class="btn btn-default" href="/admin/article/list">取消</a>
                 <button type="button" id="button-save" data-toggle="modal" data-target="#modal-default" class="btn btn-primary">保存</button>
                 <button type="button" id="button-save-continue" class="btn btn-info">保存并继续</button>
               </div>
               <!-- /.box-footer -->
-            </form>
           </div>
 
         </div>
@@ -106,26 +83,44 @@
 <script src="/js/bootstrap-treeview.js"></script>
 <!-- Select2 -->
 <script src="/adminlte/bower_components/select2/dist/js/select2.full.min.js"></script>
+<script src="/plugin/editor.md/editormd.min.js"></script>
+<script type="text/javascript">
+    var testEditor;
+
+    $(function() {
+        testEditor = editormd("test-editormd", {
+            width   : "100%",
+            height  : 640,
+            syncScrolling : "single",
+            path    : "/plugin/editor.md/lib/",
+            imageUpload:true,
+            imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL : "/upload?_token={{ csrf_token() }}"
+        });
+    });
+</script>
+
 <script>
-$("button[type='reset']").trigger("click");
+var results = [];
 
 $("#button-save").click(function(){
   $("#button-save").addClass('disabled');
   $("#button-save-continue").addClass('disabled');
   $.ajax({
     method: "POST",
-    url: "/admin/master/save",
+    url: "/admin/article/save",
     data: { 
-      pid: $("select[name='pid'] option:selected").val(),
-      name: $("input[name='name']").val(), 
-      key: $("input[name='key']").val(), 
-      value: $("input[name='value']").val(), 
-      _token: $("input[name='_token']").val() 
+      editId: $("input[name='editId']").val(), 
+      title: $("input[name='title']").val(), 
+      note: $("#articleFormNote").val(), 
+      tags: $('#form-tags').val().toString(), 
+      _token: $("input[name='_token']").val(), 
+      status:1
     }
   }).done(function( msg ) {
     if (msg.status==1) {
       molsen.alert("#main-div", 'success', msg.msg, function(){
-        window.location.href = "/admin/master/list";
+        window.location.href = "/admin/article/list";
       });
     } else {
       molsen.alert("#main-div", 'danger', msg.msg);
@@ -140,13 +135,14 @@ $("#button-save-continue").click(function(){
   $("#button-save-continue").addClass('disabled');
   $.ajax({
     method: "POST",
-    url: "/admin/master/save",
+    url: "/admin/article/save",
     data: { 
-      pid: $("select[name='pid'] option:selected").val(),
-      name: $("input[name='name']").val(), 
-      key: $("input[name='key']").val(), 
-      value: $("input[name='value']").val(), 
-      _token: $("input[name='_token']").val() 
+      editId: $("input[name='editId']").val(), 
+      title: $("input[name='title']").val(), 
+      note: $("#articleFormNote").val(), 
+      tags: $('#form-tags').val().toString(), 
+      _token: $("input[name='_token']").val(), 
+      status:1
     }
   }).done(function( msg ) {
     $("#button-save").removeClass('disabled');
@@ -160,5 +156,10 @@ $("#button-save-continue").click(function(){
     }
   });
 });
+
+$(function () {
+  //Initialize Select2 Elements
+  $('.select2').select2();
+})
 </script>
 @endpush

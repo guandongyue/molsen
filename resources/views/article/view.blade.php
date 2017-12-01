@@ -11,7 +11,7 @@
             </div>
             <div class="col-sm-4 text-right">
             @auth
-              <a class="btn btn-default" href="/article/edit/{{ $article->id }}" role="button">编辑</a>
+              <a class="btn btn-default" href="/admin/article/edit/{{ $article->id }}" role="button">编辑</a>
             @endauth
             </div>
           </div>

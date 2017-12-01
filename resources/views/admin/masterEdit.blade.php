@@ -33,7 +33,7 @@
             <!-- /.box-header -->
             <!-- form start -->
             <form id="myForm" class="form-horizontal" method="POST" action="/admin/master/save">
-            <input type="hidden" name="editId" value="@isset($records){{ $data->id }}@endisset">
+            <input type="hidden" name="editId" value="@isset($data){{ $data->id }}@endisset">
               {{ csrf_field() }}
               <div class="box-body">
                 <div class="form-group">
@@ -44,11 +44,6 @@
                       @foreach ($tree as $child)
                       <option value="{{ $child->id }}">{{ str_repeat('-', $child->level*2) }}{{ $child->name }}</option>
                       @endforeach
-                      <option>California</option>
-                      <option>Delaware</option>
-                      <option>Tennessee</option>
-                      <option>Texas</option>
-                      <option>Washington</option>
                     </select>
                   </div>
                   {{--  <label class="col-sm-2 control-label">所属上级</label>
@@ -116,6 +111,7 @@ $("#button-save").click(function(){
     method: "POST",
     url: "/admin/master/save",
     data: { 
+      editId: $("input[name='editId']").val(), 
       pid: $("select[name='pid'] option:selected").val(),
       name: $("input[name='name']").val(), 
       key: $("input[name='key']").val(), 
@@ -142,6 +138,7 @@ $("#button-save-continue").click(function(){
     method: "POST",
     url: "/admin/master/save",
     data: { 
+      editId: $("input[name='editId']").val(), 
       pid: $("select[name='pid'] option:selected").val(),
       name: $("input[name='name']").val(), 
       key: $("input[name='key']").val(), 

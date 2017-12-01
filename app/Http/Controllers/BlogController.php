@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
-use App\Category;
+use App\Master;
 
 class BlogController extends Controller
 {
@@ -12,7 +12,7 @@ class BlogController extends Controller
 
     public function __construct()
     {
-        $this->categorys = Category::select('id', 'name')->orderBy('id', 'desc')->get();
+        $this->categorys = Master::select('id', 'name')->orderBy('id', 'desc')->get();
     }
 
     //
