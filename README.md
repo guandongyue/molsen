@@ -11,6 +11,8 @@ cd project
 composer install
 chmod -R 777 storage/
 ln -s /your_project/storage/app/public/ /your_project/public/storage
+cp .env.example .env
+php artisan key:generate
 ```
 ### 配置 nginx
 ```
