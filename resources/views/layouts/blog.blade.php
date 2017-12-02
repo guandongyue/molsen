@@ -78,7 +78,7 @@
 
       <div class="row">
 
-        <div class="col-sm-8 blog-main">
+        <div class="col-sm-9 blog-main">
         <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
           @yield('content')
 
@@ -104,7 +104,7 @@
 
         </div><!-- /.blog-main -->
 
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="col-sm-3 blog-sidebar">
           <div class="sidebar-module sidebar-module-inset">
             {{--  <h4>About</h4>  --}}
             <p>做一枚懂产品爱生活的技术</p>
