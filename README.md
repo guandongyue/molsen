@@ -1,7 +1,8 @@
 
 ### 关于 Molsen
 
-目前它是一套基于Laravel做的后台管理+博客系统
+目前它是一套基于 Laravel + AdminLTE 做的后台管理 + 博客系统\
+只是做着玩.
 
 ### 安装部署 Molsen
 
