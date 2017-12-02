@@ -6,7 +6,9 @@
 ### 安装部署 Molsen
 
 ```
-git clone this_project.git
+git clone project.git
+cd project
 composer install
 chmod -R 777 storage/
+ln -s /your_project/storage/app/public/ /your_project/public/storage
 ```
