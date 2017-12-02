@@ -5,5 +5,8 @@
 
 ### 安装部署 Molsen
 
-git clone this_project.git\
+```
+git clone this_project.git
 composer install
+chmod -R 777 storage/
+```
