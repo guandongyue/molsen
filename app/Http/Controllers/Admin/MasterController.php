@@ -20,7 +20,11 @@ class MasterController extends Controller
     {
         $id = intval($request->id);
         $data = [];
-        if ($id>0) $data = Master::where('id', '=', $request->id)->first();
+        if ($id>0) {
+            $data = Master::where('id', '=', $request->id)->first();
+        } else {
+            $data = new Master;
+        }
 
         $datas = Master::select('id', 'name')->orderBy('id', 'desc')->get();
         $tree = Master::tree();

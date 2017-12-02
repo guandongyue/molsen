@@ -62,19 +62,19 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">名称</label>
                   <div class="col-sm-10">
-                    <input type="text" name="name" class="form-control" placeholder="请输入一个配置名称...">
+                    <input type="text" name="name" value="{{ $data->name }}" class="form-control" placeholder="请输入一个配置名称...">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">KEY</label>
                   <div class="col-sm-10">
-                    <input type="text" name="key" class="form-control" placeholder="请输入一个key...">
+                    <input type="text" name="key" value="{{ $data->key }}" class="form-control" placeholder="请输入一个key...">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">VALUE</label>
                   <div class="col-sm-10">
-                    <input type="text" name="value" class="form-control" placeholder="请输入一个value...">
+                    <input type="text" name="value" value="{{ $data->value }}" class="form-control" placeholder="请输入一个value...">
                   </div>
                 </div>
               </div>
