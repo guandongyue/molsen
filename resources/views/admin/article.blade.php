@@ -101,7 +101,7 @@
 <script>
 $(function () {
   var table = $('#example2').DataTable({
-    order         : [[ 0, "desc" ]]
+    order         : [[ 0, "desc" ]],
     paging        : true,
     lengthChange  : false,
     ordering      : true,
