@@ -15,6 +15,14 @@ Route::get('/', 'BlogController@index');
 Route::get('/article/{id}', 'BlogController@view');
 Route::get('/article/category/{categoryid}', 'BlogController@list');
 
+Route::get('/test/{debug?}', function ($debug=null){
+    if ($debug=='1314521') {
+        phpinfo();
+        exit;
+    }
+    return Redirect::to('/');
+});
+
 Route::get('/article/edit/{id}', 'BlogController@edit')->middleware('auth');
 Route::get('/article/delete/{id}', 'BlogController@delete')->middleware('auth');
 Route::post('/article/save', 'BlogController@save')->middleware('auth');

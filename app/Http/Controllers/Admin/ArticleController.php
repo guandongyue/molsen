@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
 
 use App\Article;
 use App\Master;
@@ -38,6 +39,14 @@ class ArticleController extends Controller
             ['id'=>$request->editId], 
             ['title'=>$request->title, 'note'=>$request->note]
         );
+
+        # 标签
+        if ($request->tags != '') {
+            Redis::pipeline(function ($pipe) {
+                // $pipe->set();
+            });
+        }
+
         return ['status'=>1, 'msg'=>'successful.', 'param'=>['id'=>$data->id, 'title'=>$data->title]];
     }
 
