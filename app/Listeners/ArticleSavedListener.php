@@ -6,8 +6,9 @@ use App\Events\ArticleSaved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Redis;
+use App\RedisKey;
 
-class ArticleListener
+class ArticleSavedListener
 {
     /**
      * Create the event listener.
@@ -16,7 +17,7 @@ class ArticleListener
      */
     public function __construct()
     {
-        //
+        
     }
 
     /**
@@ -32,18 +33,27 @@ class ArticleListener
         // print_r($event->article->getOriginal()['note']);
 
         $data = & $event->article;
-
-        $oldTags = Redis::smembers("art:{$data->id}:tag");
+        
+        // 获取文章现有的标签
+        $oldTags = Redis::smembers(RedisKey::ARTICLE.":{$data->id}:".RedisKey::TAGS);
         $newTags = explode(',', $data->tags);
+        // 获取文章需要删除掉的标签
         $delTags = array_diff($oldTags, $newTags);
         Redis::pipeline(function ($pipe) use ($data, $newTags, $delTags) {
-            $pipe->sadd("art:{$data->id}:tag", ...$newTags);
-            $pipe->srem("art:{$data->id}:tag", ...$delTags);
+            // 处理文章集合
+            // 增加标签
+            $pipe->sadd(RedisKey::ARTICLE.":{$data->id}:".RedisKey::TAGS, ...$newTags);
+            // 删除标签
+            $pipe->srem(RedisKey::ARTICLE.":{$data->id}:".RedisKey::TAGS, ...$delTags);
+
+            // 处理标签集合
             foreach ($delTags as $key => $value) {
-                $pipe->srem("tag:{$value}:art", $data->id);
+                // 删除文章
+                $pipe->srem(RedisKey::TAGS.":{$value}:".RedisKey::ARTICLE, $data->id);
             }
             foreach ($newTags as $key => $value) {
-                $pipe->sadd("tag:{$value}:art", $data->id);
+                // 增加文章
+                $pipe->sadd(RedisKey::TAGS.":{$value}:".RedisKey::ARTICLE, $data->id);
             }
         });
     }

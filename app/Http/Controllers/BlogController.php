@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 use App\Article;
 use App\Master;
+use App\Events\ArticleView;
 
 class BlogController extends Controller
 {
@@ -25,6 +27,7 @@ class BlogController extends Controller
     public function view(Request $request)
     {
         $article = Article::where('id', '=', $request->id)->first();
+        Event::fire(new ArticleView($request));
         return view('article.view', ['article'=>$article, 'categorys'=>$this->categorys]);
     }
 
