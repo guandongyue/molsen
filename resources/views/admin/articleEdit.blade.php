@@ -41,7 +41,7 @@
                   <div class="col-sm-12">
                     <select name="tags" id="form-tags" class="form-control select2" multiple="multiple" data-placeholder="选择一个标签" style="width: 100%;">
                       @foreach ($tags as $child)
-                      <option value="{{ $child->id }}">{{ $child->name }}</option>
+                      <option value="{{ $child->id }}" @if (in_array($child->id, $data->tags)) selected="selected" @endif>{{ $child->name }}</option>
                       @endforeach
                     </select>
                   </div>

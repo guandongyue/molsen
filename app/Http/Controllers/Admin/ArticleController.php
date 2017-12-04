@@ -27,6 +27,7 @@ class ArticleController extends Controller
         }
 
         $tags = Master::select()->where('pid', '=', 1)->orderBy('id', 'desc')->get();
+        $data->tags = Redis::smembers("art:{$data->id}:tag");
 
         return view('admin.articleEdit', ['data'=>$data, 'tags'=>$tags]);
     }
@@ -37,15 +38,8 @@ class ArticleController extends Controller
 
         $data = Article::updateOrCreate(
             ['id'=>$request->editId], 
-            ['title'=>$request->title, 'note'=>$request->note]
+            ['title'=>$request->title, 'note'=>$request->note, 'tags'=>$request->tags]
         );
-
-        # 标签
-        if ($request->tags != '') {
-            Redis::pipeline(function ($pipe) {
-                // $pipe->set();
-            });
-        }
 
         return ['status'=>1, 'msg'=>'successful.', 'param'=>['id'=>$data->id, 'title'=>$data->title]];
     }

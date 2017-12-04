@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ArticleSaved;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
@@ -15,4 +16,12 @@ class Article extends Model
 
     // protected $fillable = ['title'];
     protected $guarded = ['id'];
+
+    /**
+     * 模型的事件映射。
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved' => ArticleSaved::class,
+    ];
 }
