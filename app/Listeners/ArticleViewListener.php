@@ -38,14 +38,14 @@ class ArticleViewListener
             // 用户访问历史记录 只保留最近30个，其他都删除
             $pipe->zremrangebyrank(RedisKey::HISTORY.":{$data['sessionid']}:zset", 0, -31);
         });
-        // 检查该用户是否刚访问过
-        $visitor = Redis::exists(RedisKey::VISITOR.":{$data['sessionid']}");
+        // 检查该用户是否刚访问过本篇文章
+        $visitor = Redis::exists(RedisKey::VISITOR.":{$data['articleID']}:{$data['sessionid']}");
         if ($visitor===0) {
             Redis::pipeline(function ($pipe) use ($data) {
                 // 如果16小时内未访问过，则给文章增加访客数量
                 $pipe->zincrby(RedisKey::ARTICLE.":".RedisKey::VISITOR.":zset", 1, $data['articleID']);
                 // 访客数量增加后，标识访客近期已访问过，16小时候过期，允许增加文章访问数量
-                $pipe->setex(RedisKey::VISITOR.":{$data['sessionid']}", 57600, time());
+                $pipe->setex(RedisKey::VISITOR.":{$data['articleID']}:{$data['sessionid']}", 57600, time());
             });
         }
     }
