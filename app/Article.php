@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\RedisKey;
 use App\Events\ArticleSaved;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 class Article extends Model
 {
@@ -24,4 +26,20 @@ class Article extends Model
     protected $dispatchesEvents = [
         'saved' => ArticleSaved::class,
     ];
+
+    public function getTags(Array $dict)
+    {
+        $result = [];
+        $tags = Redis::smembers(RedisKey::ARTICLE.":{$this->id}:".RedisKey::TAGS);
+        foreach ($tags as $k => $v) {
+            $result[$v] = $dict[$v];
+        }
+
+        return $result;
+    }
+
+    public function getVisitor()
+    {
+        return Redis::zscore(RedisKey::ARTICLE.":".RedisKey::VISITOR.":zset", $this->id);
+    }
 }

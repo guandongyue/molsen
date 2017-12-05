@@ -171,3 +171,10 @@ h6, .h6 {
 
 .none-padding { padding: 0 !important;}
 /* .none-padding-left-right { padding-left: 0 !important; padding-right: 0 !important;} */
+
+.tags-bg-php {color: #fff; background-color: #5969AA;}
+.tags-bg-python {color: #fff; background-color: #3770A7;}
+.tags-bg-mysql {color: #fff; background-color: #ED7E12;}
+.tags-bg-redis {color: #fff; background-color: #CD151A;}
+.tags-bg-swift {color: #fff; background-color: #FA4625;}
+.tags-bg-lua {color: #fff; background-color: #00006C;}

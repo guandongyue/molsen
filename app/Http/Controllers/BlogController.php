@@ -27,8 +27,14 @@ class BlogController extends Controller
     public function view(Request $request)
     {
         $article = Article::where('id', '=', $request->id)->first();
+
+        $tagsName = Master::select()->where('pid', '=', 1)->get()->mapWithKeys(function ($item) {
+            return [$item['id'] => $item['name']];
+        })->toArray();
+
         Event::fire(new ArticleView($request));
-        return view('article.view', ['article'=>$article, 'categorys'=>$this->categorys]);
+
+        return view('article.view', ['article'=>$article, 'tags'=>$article->getTags($tagsName), 'categorys'=>$this->categorys]);
     }
 
     public function list(Request $request)
