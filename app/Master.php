@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\MasterSaved;
 use Illuminate\Database\Eloquent\Model;
 
 class Master extends Model
@@ -10,6 +11,14 @@ class Master extends Model
     const UPDATED_AT = 'uptime';
 
     protected $guarded = ['id'];
+
+    /**
+     * 模型的事件映射。
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved' => MasterSaved::class,
+    ];
 
     public static function tree()
     {

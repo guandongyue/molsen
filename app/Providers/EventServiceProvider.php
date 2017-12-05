@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ArticleView' => [
             'App\Listeners\ArticleViewListener',
         ],
+        'App\Events\MasterSaved' => [
+            'App\Listeners\MasterSavedListener',
+        ],
     ];
 
     /**

@@ -54,7 +54,7 @@
                 @foreach ($datas as $data)
                 <tr>
                   <td>{{ $data->id }}</td>
-                  <td>{{ $data->title }}</td>
+                  <td>{{ $data->title }} <span class="pull-right">@foreach ($data->tags as $k => $tag)<a href="#" class="label tags-bg-{{ $tag }}" style="margin-left:3px;">{{ $tag }}</a>@endforeach</span></td>
                   <td>{{ $data->uptime }}</td>
                   <td>{{ $data->intime }}</td>
                   <td class="col-sm-1">

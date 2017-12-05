@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
 
 use App\Article;
 use App\Master;
@@ -14,6 +15,14 @@ class ArticleController extends Controller
     public function list(Request $request)
     {
         $datas = Article::orderBy('id', 'desc')->get();
+
+
+        $masterDict = Cache::get('masterDict');
+
+        foreach ($datas as $key => $value) {
+            $datas[$key]->tags = $value->getTags($masterDict);
+        }
+
         return view('admin.article', ['datas'=>$datas]);
     }
 

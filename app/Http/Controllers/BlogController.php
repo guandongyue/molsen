@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Cache;
 use App\Article;
 use App\Master;
 use App\Events\ArticleView;
@@ -22,12 +23,10 @@ class BlogController extends Controller
     {
         $articles = Article::orderBy('id', 'desc')->get();
 
-        $tagsName = Master::select()->where('pid', '=', 1)->get()->mapWithKeys(function ($item) {
-            return [$item['id'] => $item['name']];
-        })->toArray();
+        $masterDict = Cache::get('masterDict');
 
         foreach ($articles as $key => $value) {
-            $articles[$key]->tags = $value->getTags($tagsName);
+            $articles[$key]->tags = $value->getTags($masterDict);
         }
 
         return view('blog', ['articles'=>$articles, 'categorys'=>$this->categorys]);
@@ -37,13 +36,11 @@ class BlogController extends Controller
     {
         $article = Article::where('id', '=', $request->id)->first();
 
-        $tagsName = Master::select()->where('pid', '=', 1)->get()->mapWithKeys(function ($item) {
-            return [$item['id'] => $item['name']];
-        })->toArray();
+        $masterDict = Cache::get('masterDict');
 
         Event::fire(new ArticleView($request));
 
-        return view('article.view', ['article'=>$article, 'tags'=>$article->getTags($tagsName), 'categorys'=>$this->categorys]);
+        return view('article.view', ['article'=>$article, 'tags'=>$article->getTags($masterDict), 'categorys'=>$this->categorys]);
     }
 
     public function list(Request $request)

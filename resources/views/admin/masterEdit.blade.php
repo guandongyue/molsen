@@ -42,7 +42,7 @@
                     <select name="pid" class="form-control select2" style="width: 100%;">
                       <option selected="selected"> -- 请选择 -- </option>
                       @foreach ($tree as $child)
-                      <option value="{{ $child->id }}">{{ str_repeat('-', $child->level*2) }}{{ $child->name }}</option>
+                      <option value="{{ $child->id }}" @if ($child->id==$data->pid) selected="selected" @endif>{{ str_repeat('-', $child->level*2) }}{{ $child->name }}</option>
                       @endforeach
                     </select>
                   </div>
