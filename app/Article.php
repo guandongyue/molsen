@@ -31,8 +31,11 @@ class Article extends Model
     {
         $result = [];
         $tags = Redis::smembers(RedisKey::ARTICLE.":{$this->id}:".RedisKey::TAGS);
-        foreach ($tags as $k => $v) {
-            $result[$v] = $dict[$v];
+
+        if (!empty($tags)) {
+            foreach ($tags as $k => $v) {
+                $result[$v] = $dict[$v];
+            }
         }
 
         return $result;

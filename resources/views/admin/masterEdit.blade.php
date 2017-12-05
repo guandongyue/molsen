@@ -37,26 +37,15 @@
               {{ csrf_field() }}
               <div class="box-body">
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">Minimal</label>
+                  <label class="col-sm-2 control-label">所属上级</label>
                   <div class="col-sm-10">
-                    <select class="form-control select2" style="width: 100%;">
+                    <select name="pid" class="form-control select2" style="width: 100%;">
                       <option selected="selected"> -- 请选择 -- </option>
                       @foreach ($tree as $child)
                       <option value="{{ $child->id }}">{{ str_repeat('-', $child->level*2) }}{{ $child->name }}</option>
                       @endforeach
                     </select>
                   </div>
-                  {{--  <label class="col-sm-2 control-label">所属上级</label>
-                  <div class="col-sm-10">
-                    <div class="dropdown">
-                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        根分类
-                        <span class="caret"></span>
-                      </button>
-                      <ul id="treeview" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                      </ul>
-                    </div>
-                  </div>  --}}
                 </div>
 
                 <div class="form-group">
