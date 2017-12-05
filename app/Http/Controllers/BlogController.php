@@ -21,6 +21,15 @@ class BlogController extends Controller
     public function index()
     {
         $articles = Article::orderBy('id', 'desc')->get();
+
+        $tagsName = Master::select()->where('pid', '=', 1)->get()->mapWithKeys(function ($item) {
+            return [$item['id'] => $item['name']];
+        })->toArray();
+
+        foreach ($articles as $key => $value) {
+            $articles[$key]->tags = $value->getTags($tagsName);
+        }
+
         return view('blog', ['articles'=>$articles, 'categorys'=>$this->categorys]);
     }
 
