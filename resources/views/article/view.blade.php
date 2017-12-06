@@ -7,7 +7,7 @@
   
   <div class="row">
     <div class="col-sm-8">
-      <p class="blog-post-meta">{{ $article->intime }} | @foreach ($tags as $k => $tag)<a href="#" class="label tags-bg-{{ $tag }}" style="margin-left:3px;">{{ $tag }}</a>@endforeach</p>
+      <p class="blog-post-meta">{{ $article->intime }} | @foreach ($article->tags as $k => $tag)<a href="#" class="label tags-bg-{{ $tag }}" style="margin-left:3px;">{{ $tag }}</a>@endforeach</p>
     </div>
     <div class="col-sm-4 text-right">
     @auth

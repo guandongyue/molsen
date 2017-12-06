@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use App\Article;
 use App\Master;
+use App\RedisKey;
 use App\Events\ArticleView;
 
 class BlogController extends Controller
@@ -15,7 +17,7 @@ class BlogController extends Controller
 
     public function __construct()
     {
-        $this->categorys = Master::select('id', 'name')->orderBy('id', 'desc')->get();
+        $this->categorys = Master::select('id', 'name')->where('pid', '=', '1')->orderBy('id', 'desc')->get();
     }
 
     //
@@ -29,7 +31,7 @@ class BlogController extends Controller
             $articles[$key]->tags = $value->getTags($masterDict);
         }
 
-        return view('blog', ['articles'=>$articles, 'categorys'=>$this->categorys]);
+        return view('blog', ['articles'=>$articles, 'categorys'=>$this->categorys, 'tags'=>Redis::zrevrange(RedisKey::TAGS_ARTICLE_NUM, 0, -1, 'withscores'), 'master'=>$masterDict]);
     }
 
     public function view(Request $request)
@@ -40,7 +42,9 @@ class BlogController extends Controller
 
         Event::fire(new ArticleView($request));
 
-        return view('article.view', ['article'=>$article, 'tags'=>$article->getTags($masterDict), 'categorys'=>$this->categorys]);
+        $article->tags = $article->getTags($masterDict);
+
+        return view('article.view', ['article'=>$article, 'categorys'=>$this->categorys, 'tags'=>Redis::zrevrange(RedisKey::TAGS_ARTICLE_NUM, 0, -1, 'withscores'), 'master'=>$masterDict]);
     }
 
     public function list(Request $request)

@@ -6,6 +6,9 @@ use App\Events\MasterSaved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
+use App\RedisKey;
+use App\Lua;
 
 class MasterSavedListener
 {
@@ -27,7 +30,11 @@ class MasterSavedListener
      */
     public function handle(MasterSaved $event)
     {
-        $tagsName = $event->master->select()->get()->mapWithKeys(function ($item) {
+        $master = $event->master->select()->get();
+
+        Redis::eval(Lua::TAGS_UPDATE, 0, 0);
+
+        $tagsName = $master->mapWithKeys(function ($item) {
             return [$item['id'] => $item['name']];
         })->toArray();
         Cache::forever('masterDict', $tagsName);

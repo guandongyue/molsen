@@ -110,21 +110,10 @@
             <p>做一枚懂产品爱生活的技术</p>
           </div>
           <div class="sidebar-module">
-            <h4>Archives</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">March 2014</a></li>
-              <li><a href="#">February 2014</a></li>
-              <li><a href="#">January 2014</a></li>
-              <li><a href="#">December 2013</a></li>
-              <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
-            </ol>
+            <h4>标签</h4>
+              @foreach ($tags as $key => $scores)
+              <span style="margin-bottom:2px;"><a href="#" class="label tags-bg-{{ $master[$key] }}">{{ $master[$key] }} <span class="badge" style="padding:0px 3px;font-weight:100;">{{ $scores }}</span></a></span>
+              @endforeach
           </div>
           <div class="sidebar-module">
             <h4>收藏</h4>

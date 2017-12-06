@@ -16,4 +16,7 @@ class RedisKey extends Model
     const TAGS = 'tag';
     const VISITOR = 'visitor';
     const HISTORY = 'history';
+
+    const ARTICLE_VISITOR = 'art:visitor:zset';
+    const TAGS_ARTICLE_NUM = 'tags:zset';
 }
