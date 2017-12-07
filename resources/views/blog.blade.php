@@ -13,4 +13,6 @@
           </div><!-- /.blog-post -->
         @endforeach
 
+          {{ $articles->links() }}
+
 @endsection

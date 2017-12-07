@@ -23,7 +23,7 @@ class BlogController extends Controller
     //
     public function index()
     {
-        $articles = Article::orderBy('id', 'desc')->get();
+        $articles = Article::orderBy('id', 'desc')->paginate(10);
 
         $masterDict = Cache::get('masterDict');
 
