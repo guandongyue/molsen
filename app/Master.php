@@ -3,7 +3,10 @@
 namespace App;
 
 use App\Events\MasterSaved;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
+use App\Lua;
 
 class Master extends Model
 {
@@ -41,61 +44,53 @@ class Master extends Model
         return $list;
     }
 
+    public function updateRedisTags()
+    {
+        $luaScrpit = Lua::TAGS_UPDATE;
+        // $hashKey = sha1($luaScrpit);
+        // $rs = Redis::evalsha($luaScrpit, 0);
+        // $rs = Redis::script('load', $luaScrpit, 0);
+        $rs = Redis::eval($luaScrpit, 0);
+        // $rs = Redis::script('exists', $hashKey);
+        // if (!$rs) {
+        //     Redis::eval($luaScrpit, 0);
+        // }
+    }
+
+    public function setCache()
+    {
+        $tagsName = $this->select()->get()->mapWithKeys(function ($item) {
+            return [$item['id'] => $item['name']];
+        })->toArray();
+        Cache::forever('masterDict', $tagsName);
+    }
+
+    // private static function treeChildView($tree)
+    // {
+    //     $treeHTML = '<ul class="treeview-menu">';
+    //     foreach ($tree as $k => $item) {
+    //         if (empty($item->children)) {
+    //             $treeHTML .= '<li><a href="#"><i class="fa fa-circle-o"></i> '.$item->name.'</a></li>';
+    //         } else {
+    //             $treeHTML .= '<li class="treeview">
+    //             <a href="#"><i class="fa fa-circle-o"></i> '.$item->name.'
+    //             <span class="pull-right-container">
+    //                 <i class="fa fa-angle-left pull-right"></i>
+    //             </span>
+    //             </a>';
+    //             $treeHTML .= self::treeChildView($item['children']);
+    //             $treeHTML .= '</li>';
+    //         }
+    //         $treeHTML .= self::treeChildView($item['children']);
+    //         $treeHTML .= '</li>';
+    //     }
+    //     $treeHTML .= '</ul>';
+    //     return $treeHTML;
+    // }
+
     /**
-     * 放弃使用
+     * Data for Bootstrap-treeview.js
      */
-    public static function ____treeView($tree, $href='/admin/master/list')
-    {
-        $treeHTML = '<ul class="molsen-tree-menu" data-widget="tree">';
-
-        foreach ($tree as $k => $item) {
-            if (empty($item->children)) {
-                $treeHTML .= '<li><a href="'.$href.'/'.$item->id.'"><i class="fa fa-list-ul"></i> '.$item->name.'</a></li>';
-            } else {
-                $treeHTML .= '<li class="treeview">
-                <a href="#">
-                  <i class="fa fa-list-ul"></i> <span> '.$item->name.'</span>
-                  <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                  </span>
-                </a>';
-            }
-            $treeHTML .= self::treeChildView($item['children']);
-            $treeHTML .= '</li>';
-        }
-
-        $treeHTML .= '<li>
-        <a href="/admin/master/edit" class="btn btn-block btn-default">
-        <i class="fa fa-plus"></i> <span>创建</span>
-        </a>
-    </li>
-</ul>';
-        return $treeHTML;
-    }
-
-    private static function treeChildView($tree)
-    {
-        $treeHTML = '<ul class="treeview-menu">';
-        foreach ($tree as $k => $item) {
-            if (empty($item->children)) {
-                $treeHTML .= '<li><a href="#"><i class="fa fa-circle-o"></i> '.$item->name.'</a></li>';
-            } else {
-                $treeHTML .= '<li class="treeview">
-                <a href="#"><i class="fa fa-circle-o"></i> '.$item->name.'
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-                </a>';
-                $treeHTML .= self::treeChildView($item['children']);
-                $treeHTML .= '</li>';
-            }
-            $treeHTML .= self::treeChildView($item['children']);
-            $treeHTML .= '</li>';
-        }
-        $treeHTML .= '</ul>';
-        return $treeHTML;
-    }
-
     public static function buildTreeView($tree, $selectedID='', $href='/admin/master/list')
     {
         $result = [];

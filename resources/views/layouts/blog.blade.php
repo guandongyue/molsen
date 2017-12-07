@@ -126,6 +126,12 @@
               <li><a href="https://cs.laravel-china.org/" title="一个页面放了所有的Laravel命令，蛮实用，可惜版本不是最新的" target="_blank">Laravel 命令速查</a></li>
             </ol>
           </div>
+          <div class="sidebar-module">
+            <h4>这里很骚气</h4>
+            <ol class="list-unstyled">
+              <li><a href="http://cv.jevon.cn/" title="孙巨文的站点" target="_blank">Jevon's Site</a></li>
+            </ol>
+          </div>
         </div><!-- /.blog-sidebar -->
 
       </div><!-- /.row -->
