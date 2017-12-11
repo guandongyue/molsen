@@ -77,6 +77,7 @@
                 <tr>
                   <th>ID</th>
                   <th>标题</th>
+                  <th>状态</th>
                   <th>更新时间</th>
                   <th>入库时间</th>
                   <th>操作</th>
