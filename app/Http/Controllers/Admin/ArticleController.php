@@ -47,7 +47,7 @@ class ArticleController extends Controller
 
         $data = Article::updateOrCreate(
             ['id'=>$request->editId], 
-            ['title'=>$request->title, 'note'=>$request->note, 'tags'=>$request->tags]
+            ['title'=>$request->title, 'note'=>$request->note, 'tags'=>$request->tags, 'status'=>$request->status]
         );
 
         return ['status'=>1, 'msg'=>'successful.', 'param'=>['id'=>$data->id, 'title'=>$data->title]];

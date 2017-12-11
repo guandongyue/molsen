@@ -45,6 +45,7 @@
                 <tr>
                   <th>ID</th>
                   <th>标题</th>
+                  <th>状态</th>
                   <th>更新时间</th>
                   <th>入库时间</th>
                   <th>操作</th>
@@ -55,6 +56,7 @@
                 <tr>
                   <td>{{ $data->id }}</td>
                   <td>{{ $data->title }} <span class="pull-right">@foreach ($data->tags as $k => $tag)<a href="#" class="label tags-bg-{{ $tag }}" style="margin-left:3px;">{{ $tag }}</a>@endforeach</span></td>
+                  <td>@if ($data->status==1) <span class="label label-success">已发布</span> @else <span class="label label-default">草稿</span> @endif</td>
                   <td>{{ $data->uptime }}</td>
                   <td>{{ $data->intime }}</td>
                   <td class="col-sm-1">

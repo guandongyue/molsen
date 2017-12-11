@@ -61,6 +61,16 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <div class="radio">
+                      <label><input type="radio" name="status" value="0" @if ($data->status==0) checked="checked" @endif> 草稿</label>
+                      <label><input type="radio" name="status" value="1" @if ($data->status==1) checked="checked" @endif> 发布</label>
+                    </div>
+                  </div>
+                </div>
+
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
@@ -114,8 +124,8 @@ $("#button-save").click(function(){
       title: $("input[name='title']").val(), 
       note: $("#articleFormNote").val(), 
       tags: $('#form-tags').val().toString(), 
-      _token: $("input[name='_token']").val(), 
-      status:1
+      status: $("input[name='status']:checked").val(),
+      _token: $("input[name='_token']").val()
     }
   }).done(function( msg ) {
     if (msg.status==1) {
@@ -141,8 +151,8 @@ $("#button-save-continue").click(function(){
       title: $("input[name='title']").val(), 
       note: $("#articleFormNote").val(), 
       tags: $('#form-tags').val().toString(), 
-      _token: $("input[name='_token']").val(), 
-      status:1
+      status: $("input[name='status']:checked").val(),
+      _token: $("input[name='_token']").val()
     }
   }).done(function( msg ) {
     $("#button-save").removeClass('disabled');
