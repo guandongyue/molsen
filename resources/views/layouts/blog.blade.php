@@ -98,11 +98,12 @@
             <h4>收藏</h4>
             <ol class="list-unstyled">
               <li><a href="https://github.com/" title="公用代码库" target="_blank">GitHub</a></li>
-              <li><a href="http://www.bootcdn.cn/" title="公用CDN资源" target="_blank">BootCDN</a></li>
+              <li><a href="http://www.bootcdn.cn/" title="公用CDN资源" target="_blank">免费 CDN资源</a></li>
               <li><a href="http://www.iconfont.cn/" title="大量在线图标库" target="_blank">iconFont</a></li>
               <li><a href="http://v3.bootcss.com/css/" title="CSS框架" target="_blank">Bootstrap</a></li>
               <li><a href="https://d.laravel-china.org/docs/5.5" title="全中文手册，翻译的不错" target="_blank">Laravel 中文手册</a></li>
               <li><a href="https://cs.laravel-china.org/" title="一个页面放了所有的Laravel命令，蛮实用，可惜版本不是最新的" target="_blank">Laravel 命令速查</a></li>
+              <li><a href="https://github.com/phpredis/phpredis/" title="phpredis 手册" target="_blank">phpredis 文档</a></li>
             </ol>
           </div>
           <div class="sidebar-module">
