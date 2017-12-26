@@ -28,7 +28,7 @@ class BlogController extends Controller
 
         $condition[] = ['status', '=', '1'];
         if ($tagid>0) {
-            $articles = Redis::smembers(RedisKey::TAGS.$tagid.RedisKey::ARTICLE);
+            $articles = Redis::smembers(RedisKey::TAGS.':'.$tagid.':'.RedisKey::ARTICLE);
             if (count($articles) > 0) {
                 $articles = Article::where($condition)->wherein('id', $articles)->orderBy('id', 'desc')->paginate(10);
             } else {

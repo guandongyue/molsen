@@ -87,7 +87,7 @@
           <div class="sidebar-module">
             <h4>标签</h4>
               @foreach ($tags as $key => $scores)
-              <span style="margin-bottom:4px;display:inline-block;"><a href="/{{ $master[$key] }}" class="label tags-bg-{{ $master[$key] }}">{{ $master[$key] }} <span class="badge" style="padding:0px 3px;font-weight:100;">{{ $scores }}</span></a></span>
+              <span style="margin-bottom:4px;display:inline-block;"><a href="/tag/{{ $master[$key] }}" class="label tags-bg-{{ $master[$key] }}">{{ $master[$key] }} <span class="badge" style="padding:0px 3px;font-weight:100;">{{ $scores }}</span></a></span>
               @endforeach
           </div>
           <div class="sidebar-module">
