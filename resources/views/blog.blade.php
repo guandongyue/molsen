@@ -1,5 +1,9 @@
 @extends('layouts.blog')
 
+{{--  需要有 @parent 标签，才会继承父页面的内容，否则直接覆盖  --}}
+@section('breadcrumb')
+@stop
+
 @section('content')
 
         @foreach ($articles as $article)
