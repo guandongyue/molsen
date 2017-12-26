@@ -21,11 +21,22 @@ class BlogController extends Controller
     }
 
     //
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::where('status', '=', '1')->orderBy('id', 'desc')->paginate(10);
-
         $masterDict = Cache::get('masterDict');
+        $tagid = intval(array_search($request->tag, $masterDict));
+
+        $condition[] = ['status', '=', '1'];
+        if ($tagid>0) {
+            $articles = Redis::smembers(RedisKey::TAGS.$tagid.RedisKey::ARTICLE);
+            if (count($articles) > 0) {
+                $articles = Article::where($condition)->wherein('id', $articles)->orderBy('id', 'desc')->paginate(10);
+            } else {
+                $articles = Article::where('id', '=', '0')->paginate(10);
+            }
+        } else {
+            $articles = Article::where($condition)->orderBy('id', 'desc')->paginate(10);
+        }
 
         foreach ($articles as $key => $value) {
             $articles[$key]->tags = $value->getTags($masterDict);
