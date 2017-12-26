@@ -4,7 +4,7 @@
 @section('breadcrumb')
   @parent 
   <li class="active">文章</li>
-@stop
+@endsection
 
 @section('content')
 <div class="blog-post"> 
@@ -103,4 +103,4 @@
   </div>
 </div>
 --}}
-@stop
+@endsection
