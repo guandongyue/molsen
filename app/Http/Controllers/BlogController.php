@@ -21,21 +21,29 @@ class BlogController extends Controller
     }
 
     //
-    public function index(Request $request)
+    public function index()
+    {
+        $masterDict = Cache::get('masterDict');
+        
+        $articles = Article::where('status', '=', '1')->orderBy('id', 'desc')->paginate(10);
+
+        foreach ($articles as $key => $value) {
+            $articles[$key]->tags = $value->getTags($masterDict);
+        }
+
+        return view('blog', ['articles'=>$articles, 'categorys'=>$this->categorys, 'tags'=>Redis::zrevrange(RedisKey::TAGS_ARTICLE_NUM, 0, -1, 'withscores'), 'master'=>$masterDict]);
+    }
+
+    public function tag(Request $request)
     {
         $masterDict = Cache::get('masterDict');
         $tagid = intval(array_search($request->tag, $masterDict));
 
-        $condition[] = ['status', '=', '1'];
-        if ($tagid>0) {
-            $articles = Redis::smembers(RedisKey::TAGS.':'.$tagid.':'.RedisKey::ARTICLE);
-            if (count($articles) > 0) {
-                $articles = Article::where($condition)->wherein('id', $articles)->orderBy('id', 'desc')->paginate(10);
-            } else {
-                $articles = Article::where('id', '=', '0')->paginate(10);
-            }
+        $articles = Redis::smembers(RedisKey::TAGS.':'.$tagid.':'.RedisKey::ARTICLE);
+        if (count($articles) > 0) {
+            $articles = Article::where('status', '=', '1')->wherein('id', $articles)->orderBy('id', 'desc')->paginate(10);
         } else {
-            $articles = Article::where($condition)->orderBy('id', 'desc')->paginate(10);
+            $articles = Article::where('id', '=', '0')->paginate(10);
         }
 
         foreach ($articles as $key => $value) {

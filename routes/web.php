@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'BlogController@index');
-Route::get('/tag/{tag?}', 'BlogController@index');
+Route::get('/tag/{tag?}', 'BlogController@tag');
 Route::get('/article/{id}', 'BlogController@view');
 Route::get('/article/category/{categoryid}', 'BlogController@list');
 
