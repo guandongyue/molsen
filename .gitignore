@@ -2,3 +2,4 @@ vendor
 public/storage
 .env
 .vscode
+update.php
