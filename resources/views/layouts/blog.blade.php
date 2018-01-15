@@ -103,6 +103,14 @@
             </ol>
           </div>
           <div class="sidebar-module">
+            <h4>大神博客</h4>
+            <ol class="list-unstyled">
+              <li><a href="http://www.ruanyifeng.com/blog/" title="很厉害的一位大神" target="_blank">阮一峰的网络日志</a></li>
+              <li><a href="http://www.turbolinux.com.cn/turbo/wiki/doku.php" title="Linux 命令讲解" target="_blank">Linux Wiki</a></li>
+              <li><a href="http://linuxwiki.github.io/" title="Linux 命令讲解" target="_blank">Linux 网络相关 Wiki</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-module">
             <h4>这里很骚气</h4>
             <ol class="list-unstyled">
               <li><a href="http://cv.jevon.cn/" title="孙巨文的站点" target="_blank">Jevon's Site</a></li>
