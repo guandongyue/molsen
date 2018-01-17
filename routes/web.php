@@ -49,14 +49,14 @@ Route::get('/update', function ($debug=null){
         // 是WebHook请求, 并decode数据
         $json = json_decode($hook_log, true);
         if (array_key_exists('ref', $json)) {
-            system('/usr/bin/sudo git pull 2>&1', $retval);
+            system('git pull 2>&1', $retval);
         } else {
         }
     } else {
         // 直接访问URL，手动更新
         echo '<pre>';
     
-        $last_line = system('/usr/bin/sudo git pull 2>&1', $retval);
+        $last_line = system('git pull 2>&1', $retval);
     
         // 打印更多信息
         echo "
