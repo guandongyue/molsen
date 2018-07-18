@@ -105,10 +105,17 @@
           <div class="sidebar-module">
             <h4>大神博客</h4>
             <ol class="list-unstyled">
+              <li><a href="http://www.laruence.com/" title="很厉害的一位大神" target="_blank">鸟叔博客</a></li>
               <li><a href="http://www.ruanyifeng.com/blog/" title="很厉害的一位大神" target="_blank">阮一峰的网络日志</a></li>
               <li><a href="http://rango.swoole.com/" title="Swoole..." target="_blank">韩天峰的博客</a></li>
               <li><a href="http://www.turbolinux.com.cn/turbo/wiki/doku.php" title="Linux 命令讲解" target="_blank">Linux Wiki</a></li>
               <li><a href="http://linuxwiki.github.io/" title="Linux 命令讲解" target="_blank">Linux 网络相关 Wiki</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-module">
+            <h4>在线资料</h4>
+            <ol class="list-unstyled">
+              <li><a href="https://www.kancloud.cn/nickbai/php7/363255" title="PHP7内核剖析" target="_blank">PHP7内核剖析</a></li>
             </ol>
           </div>
           <div class="sidebar-module">
