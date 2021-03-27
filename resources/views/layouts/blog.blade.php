@@ -138,7 +138,7 @@
       <p>技需勤以出神，艺唯思方入化。</p>
       <p>© 暮隼</p>
       <p>
-        <a href="#">京ICP备15014247号-4</a>
+        <a href="https://beian.miit.gov.cn/" target="_blank">京ICP备15014247号-4</a>
       </p>
     </footer>
 
